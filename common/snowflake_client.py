@@ -20,14 +20,14 @@ class SnowflakeClient:
 
     def execute(self, sql: str):
         cursor = self._connect()
-        
+        cursor.execute("USE WAREHOUSE LOAD_WH;")
         with cursor.execute(sql) as execute_query:
             print(f"Executing query: {sql}")
  
     
     def fetch_one(self, sql: str):
         cursor = self._connect()
-        
+        cursor.execute("USE WAREHOUSE LOAD_WH;")
         with cursor.execute(sql) as execute_query:
             print(f"Executing query: {sql}")
             result = execute_query.fetchone()
@@ -37,7 +37,7 @@ class SnowflakeClient:
    
     def fetch_all(self, sql: str):
         cursor = self._connect()
-        
+        cursor.execute("USE WAREHOUSE LOAD_WH;")
         with cursor.execute(sql) as execute_query:
             print(f"Executing query: {sql}")
             result = execute_query.fetchall()
@@ -46,9 +46,13 @@ class SnowflakeClient:
     
     def fetch_pandas_dataframe(self, sql: str):
         cursor = self._connect()
-        
+        cursor.execute("USE WAREHOUSE LOAD_WH;")
         with cursor.execute(sql) as execute_query:
             print(f"Executing query: {sql}")
             result = execute_query.fetch_pandas_all()
         
         return result 
+
+
+# SnowflakeClient().fetch_one('SELECT 1')
+

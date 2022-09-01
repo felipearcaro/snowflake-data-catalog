@@ -29,7 +29,7 @@ class CreateAccountMetadata:
 #Run file to populate Snowflake with tables metadata
 # CreateAccountMetadata().populate_snowflake()
 
-class CreateAccountMetadataPostgres:
+class CreateAccountMetadataPostgres():
 
     LIST_SNOWFLAKE_DATABASES = read_sql_file('populate_snowflake//databases')
     GET_SNOWFLAKE_DATA = read_sql_file('populate_snowflake//get_snowflake_data')
@@ -38,8 +38,9 @@ class CreateAccountMetadataPostgres:
     def __init__(self):
         pass
 
-    def populate_postgres(self):
-        databases = self._list_snowflake_databases()
+    def populate_postgres(self, databases:list = None):
+        if databases is None:
+            databases = self._list_snowflake_databases()
         results = self._get_snowflake_data(databases)
 
     def _list_snowflake_databases(self):
@@ -60,4 +61,13 @@ class CreateAccountMetadataPostgres:
         query = query.replace("[","").replace("]","").replace("None","NULL")
         postgree_client(query)
         
-CreateAccountMetadataPostgres().populate_postgres()
+databases = [
+    {"db_name": "DATA_QUALITY",
+    "db_description":"This is a Data Quality database"
+    },
+    {"db_name": "MACHINE_LEARNING",
+    "db_description":"This is a Machine Learning database"
+    }
+]
+
+CreateAccountMetadataPostgres().populate_postgres(databases)
