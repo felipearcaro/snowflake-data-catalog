@@ -126,9 +126,9 @@ def columns():
     # table_lineage = DataCatalogLineage.query\
     #     .with_entities()
 
-    results = ColumnsMetadata(database, schema, table).columns 
-    lineage = SnowflakeClient().fetch_all("SELECT SOURCE_TABLE, QUERY from data_catalog.public.data_catalog_lineage WHERE table_name = 'SALES'")
-    return render_template('columns.html', columns=columns, database=database, schema=schema, table=table, lineage = lineage)
+    # results = ColumnsMetadata(database, schema, table).columns 
+    #lineage = SnowflakeClient().fetch_all("SELECT SOURCE_TABLE, QUERY from data_catalog.public.data_catalog_lineage WHERE table_name = 'SALES'")
+    return render_template('columns.html', columns=columns, database=database, schema=schema, table=table)
     
 if __name__ == "__main__":
     app.run(debug=True)
