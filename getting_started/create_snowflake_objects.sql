@@ -52,3 +52,12 @@ create or replace table data_catalog_agg (
 	IS_NULLABLE BOOLEAN,
 	CHARACTER_MAXIMUM_LENGTH NUMBER,
 	NUMERIC_PRECISION NUMBER)
+
+--- CREATE DATA LINEAGE TABLE
+
+create or replace table data_catalog.public.data_catalog_lineage (
+	DB_NAME TEXT,
+	SCHEMA_NAME TEXT,
+	TABLE_NAME TEXT,
+	SOURCE_TABLE TEXT,
+    QUERY TEXT)
