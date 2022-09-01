@@ -1,0 +1,20 @@
+query
+"INSERT INTO DATA_CATALOG_AGG(\n\tDATABASE_NAME,\n\tDATABASE_DESCRIPTION,\n\tSCHEMA_NAME,\n\tSCHEMA_DESCRIPTION,\n\tTABLE_NAME,\n\tTABLE_DESCRIPTION,\n\tCOLUMN_NAME,\n\tCOLUMN_DESCRIPTION,\n\tDATA_TYPE,\n\tIS_NULLABLE,\n\tCHARACTER_MAXIMUM_LENGTH,\n\tNUMERIC_PRECISION\n)\nVALUES\n('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE', 'This is a Data Catalog schema', 'CUSTOMERS', 'This is a CUSTOMERS table', 'CUSTOMER_NAME', 'This is a CUSTOMER_NAME column', 'TEXT', 'YES', 16777216, NULL), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE', 'This is a Data Catalog schema', 'SALES', 'This is a SALES table', 'PRODUCT_ID', 'This is a PRODUCT_ID column', 'NUMBER', 'YES', NULL, 38), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE', 'This is a Data Catalog schema', 'CUSTOMERS', 'This is a CUSTOMERS table', 'CUSTOMER_ID', 'This is a CUSTOMER_ID column', 'NUMBER', 'YES', NULL, 38), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE', 'This is a Data Catalog schema', 'SALES', 'This is a SALES table', 'PRODUCT_NAME', 'This is a PRODUCT_NAME column', 'TEXT', 'YES', 16777216, NULL), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE_2', 'This is the second example of a Data Catalog schema', 'CATEGORY', 'This is a CATEGORY table', 'CATEGORY_NAME', 'This is a CATEGORY_NAME column', 'TEXT', 'YES', 16777216, NULL), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE_2', 'This is the second example of a Data Catalog schema', 'SPENDINGS', 'This is a SPENDINGS table', 'SPENDING_ID', 'This is a SPENDING_ID column', 'NUMBER', 'YES', NULL, 38), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE_2', 'This is the second example of a Data Catalog schema', 'SPENDINGS', 'This is a SPENDINGS table', 'SPENDING_NAME', 'This is a SPENDING_NAME column', 'TEXT', 'YES', 16777216, NULL), ('DATA_CATALOG', 'This is a Data Catalog Database', 'DATA_CATALOG_SAMPLE_2', 'This is the second example of a Data Catalog schema', 'CATEGORY', 'This is a CATEGORY table', 'CATEGORY_ID', 'This is a CATEGORY_ID column', 'NUMBER', 'YES', NULL, 38)"
+
+
+select db.database_name, db.comment, sc.schema_name, sc.comment, tb.table_name, tb.comment, co.column_name, co.comment, co.data_type, co.is_nullable, co.CHARACTER_MAXIMUM_LENGTH, co.numeric_precision 
+from data_catalog.information_schema.databases db
+INNER join SNOWFLAKE.information_schema.schemata sc on db.database_name = sc.catalog_name
+INNER join SNOWFLAKE.information_schema.tables tb on sc.schema_name = tb.table_schema
+INNER join SNOWFLAKE.information_schema.columns co on tb.table_name = co.table_name
+where database_name = 'DATA_CATALOG' 
+and sc.schema_name NOT IN ('PUBLIC','INFORMATION_SCHEMA') AND tb.table_schema NOT IN ('PUBLIC','INFORMATION_SCHEMA') and co.table_schema NOT IN ('PUBLIC','INFORMATION_SCHEMA');
+
+
+select db.database_name, db.comment, sc.schema_name, sc.comment, tb.table_name, tb.comment, co.column_name, co.comment, co.data_type, co.is_nullable, co.CHARACTER_MAXIMUM_LENGTH, co.numeric_precision 
+from data_catalog.information_schema.databases db
+INNER join DATA_CATALOG.information_schema.schemata sc on db.database_name = sc.catalog_name
+INNER join DATA_CATALOG.information_schema.tables tb on sc.schema_name = tb.table_schema
+INNER join DATA_CATALOG.information_schema.columns co on tb.table_name = co.table_name
+where database_name = 'DATA_CATALOG'
+and sc.schema_name NOT IN ('PUBLIC','INFORMATION_SCHEMA') AND tb.table_schema NOT IN ('PUBLIC','INFORMATION_SCHEMA') and co.table_schema NOT IN ('PUBLIC','INFORMATION_SCHEMA');

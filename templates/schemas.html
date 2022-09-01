@@ -13,10 +13,10 @@
                 </tr>
             </thead>
             <tbody>
-                {% for result in results%}
+                {% for schema in schemas%}
                 <tr>
-                  <td><a href="{{url_for('tables', database=database, schema=result.schema_name)}}">{{ result.schema_name }}</a></td>
-                    <td>{{ result.schema_comment }}</td>
+                  <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{ schema.schema_name }}</a></td>
+                    <td>{{ schema.schema_description }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
