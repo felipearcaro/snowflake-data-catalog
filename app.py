@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-import time
+from sqlalchemy import or_, func
 
 TODAYS_DATE = str(datetime.today()).split('.')[0]
 
@@ -126,9 +126,19 @@ def columns():
     # table_lineage = DataCatalogLineage.query\
     #     .with_entities()
 
-    # results = ColumnsMetadata(database, schema, table).columns 
+    #results = ColumnsMetadata(database, schema, table).columns 
     #lineage = SnowflakeClient().fetch_all("SELECT SOURCE_TABLE, QUERY from data_catalog.public.data_catalog_lineage WHERE table_name = 'SALES'")
     return render_template('columns.html', columns=columns, database=database, schema=schema, table=table)
+
+
+@app.route('/search', methods=['POST'])
+def search():
+    query = f"%{request.form['query']}%"
+    print(query)
+    results = DataCatalogAgg.query.filter\
+        (or_(DataCatalogAgg.table_description.ilike(query), 
+        DataCatalogAgg.column_description.ilike(query))).distinct()
+    return render_template('search.html', results=results)
     
 if __name__ == "__main__":
     app.run(debug=True)

@@ -3,19 +3,12 @@
 
   <section>
 	  <div class="container">
-
-		<table class="table table-striped table-responsive table-bordered">
-            <thead class="thead-default">
-                <tr>
-                    <th>Database</th>
-                    <th>Comment</th>
-                </tr>
-            </thead>
+		<table class="table table-responsive">
             <tbody>
                 {% for database in databases%}
                 <tr>
-                  <td><a href="{{url_for('schemas', database=database.database_name)}}">{{ database.database_name }}</a></td>
-                  <td>{{ database.database_description }}</td>
+                  <strong><td><a href="{{url_for('schemas', database=database.database_name)}}">{{ database.database_name }}</a></strong>
+                  <br>{{ database.database_description }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

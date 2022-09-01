@@ -4,19 +4,12 @@
   <section>
 	  <div class="container">
         <h2> From database {{ database }}</h2>
-		<table class="table table-striped table-responsive table-bordered">
-            <thead class="thead-default">
-                <tr>
-                    
-                    <th>Schemas</th>
-                    <th>Comment</th>
-                </tr>
-            </thead>
+		<table class="table table-responsive">
             <tbody>
                 {% for schema in schemas%}
                 <tr>
-                  <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{ schema.schema_name }}</a></td>
-                    <td>{{ schema.schema_description }}</td>
+                  <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{ schema.schema_name }}</a>
+                   <br> {{ schema.schema_description }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
