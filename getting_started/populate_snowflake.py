@@ -62,11 +62,8 @@ class CreateAccountMetadataPostgres():
         postgree_client(query)
         
 databases = [
-    {"db_name": "DATA_CATALOG",
-    "db_description":"This is a Data Quality database"
-    },
-    {"db_name": "SNOWFLAKE_SAMPLE_DATA",
-    "db_description":"This is a Machine Learning database"
+    {"db_name": "SUBSCRIBER_TABLES",
+    "db_description":"This is FIVETRAN database"
     }
 ]
 

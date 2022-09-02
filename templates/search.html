@@ -24,7 +24,11 @@
                 <tbody>
                     {% for result in table_results%}
                     <tr>
+                      {% if result.dbms == 'snowflake' %}
                       <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                      {% else %}
+                      <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                      {% endif %}
                       <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
                       <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a>
@@ -48,7 +52,11 @@
                 <tbody>
                     {% for result in column_results%}
                     <tr>
+                      {% if result.dbms == 'snowflake' %}
                       <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                      {% else %}
+                      <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                      {% endif %}
                       <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
                       <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a><br>

@@ -1,4 +1,4 @@
-merge into data_quality.felipe.new_table using source_db.source_schema.source_table
+merge into SUBSCRIBER_TABLES.SUBSCRIBER_DATABASE_TABLES.WORKORDER using source_db.source_schema.test_one
     on target_table.id = source_table.id
     when matched then 
         update set target_table.description = source_table.description

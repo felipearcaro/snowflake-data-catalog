@@ -17,8 +17,11 @@ for file in transformation_files[0]:
         regexp = r"(merge into|MERGE INTO)(\s+|\n+)([^\s]+)"
         result = re.search(regexp, sql_query)
 
-        target_table= result.group(0).split(" ")[-1]
-        print(f"Here's the table that's being populated: {target_table.upper()}")
+        target_full_table = result.group(0).split(" ")[-1]
+        target_database = target_full_table.split(".")[0]
+        target_schema = target_full_table.split(".")[1]
+        target_table = target_full_table.split(".")[2]
+        print(f"Here's the table that's being populated: {target_full_table.upper()}")
 
 
         ## Getting table that's being used to populate new table
@@ -29,11 +32,12 @@ for file in transformation_files[0]:
         print(f"Here's the table that's being used: {source_table.upper()}")
 
         query = f"""
-        insert into data_catalog_lineage (database_name, schema_name, table_name, source_table, source_query)
+        insert into data_catalog_lineage (dbms, database_name, schema_name, table_name, source_table, source_query)
         VALUES (
-        'DATA_QUALITY',
-        'FELIPE',
-        'NEW_TABLE',
+        'snowflake', 
+        '{target_database}',
+        '{target_schema}',
+        '{target_table}',
         '{source_table}',
         '{sql_query}')
         """

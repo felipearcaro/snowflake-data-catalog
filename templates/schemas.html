@@ -8,7 +8,11 @@
             <tbody>
                 {% for schema in schemas%}
                 <tr>
+                  {% if schema.dbms == 'snowflake' %}
                   <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                  {% else %}
+                  <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
+                  {% endif %}
                   <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{ schema.schema_name }}</a>
                    <br> {{ schema.schema_description }}</td>
                 </tr>
