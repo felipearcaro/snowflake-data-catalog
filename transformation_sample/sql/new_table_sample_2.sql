@@ -1,4 +1,4 @@
-merge into target_db.target_schema.target_table_2 using source_db.source_schema.source_table2
+merge into data_quality.felipe.new_table using source_db.source_schema.source_table2
     on target_table.id = source_table.id
     when matched then 
         update set target_table.description = source_table.description

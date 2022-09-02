@@ -123,22 +123,43 @@ def columns():
                         DataCatalogAgg.numeric_precision)\
         .filter_by(database_name=database, schema_name = schema, table_name = table).distinct()
     
-    # table_lineage = DataCatalogLineage.query\
-    #     .with_entities()
+    table_lineage = DataCatalogLineage.query\
+        .with_entities(DataCatalogLineage.source_table, 
+                        DataCatalogLineage.source_query)\
+        .filter_by(database_name=database, schema_name = schema, table_name = table).distinct()
+
+    table_description = DataCatalogAgg.query\
+        .with_entities(DataCatalogAgg.table_description)\
+        .filter_by(database_name=database, schema_name = schema, table_name = table).first()
 
     #results = ColumnsMetadata(database, schema, table).columns 
     #lineage = SnowflakeClient().fetch_all("SELECT SOURCE_TABLE, QUERY from data_catalog.public.data_catalog_lineage WHERE table_name = 'SALES'")
-    return render_template('columns.html', columns=columns, database=database, schema=schema, table=table)
+    return render_template('columns.html', columns=columns, table_description = table_description, table_lineage=table_lineage, database=database, schema=schema, table=table)
 
 
 @app.route('/search', methods=['POST'])
 def search():
     query = f"%{request.form['query']}%"
     print(query)
-    results = DataCatalogAgg.query.filter\
-        (or_(DataCatalogAgg.table_description.ilike(query), 
+    table_results = DataCatalogAgg.query\
+        .with_entities(DataCatalogAgg.database_name, 
+                        DataCatalogAgg.schema_name, 
+                        DataCatalogAgg.table_name)\
+        .filter(or_(DataCatalogAgg.table_description.ilike(query), 
         DataCatalogAgg.column_description.ilike(query))).distinct()
-    return render_template('search.html', results=results)
+
+
+    column_results = DataCatalogAgg.query\
+        .with_entities(DataCatalogAgg.database_name, 
+                        DataCatalogAgg.schema_name, 
+                        DataCatalogAgg.table_name,
+                        DataCatalogAgg.column_name,
+                        DataCatalogAgg.column_description,
+                        DataCatalogAgg.data_type)\
+        .filter(or_(DataCatalogAgg.table_description.ilike(query), 
+        DataCatalogAgg.column_description.ilike(query))).distinct()
+
+    return render_template('search.html', table_results=table_results, column_results = column_results)
     
 if __name__ == "__main__":
     app.run(debug=True)

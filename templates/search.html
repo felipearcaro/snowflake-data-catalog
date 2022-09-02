@@ -22,8 +22,9 @@
     
         <table class="table table-responsive">
                 <tbody>
-                    {% for result in results%}
+                    {% for result in table_results%}
                     <tr>
+                      <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
                       <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
                       <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a>
@@ -45,12 +46,13 @@
     
         <table class="table table-responsive">
                 <tbody>
-                    {% for result in results%}
+                    {% for result in column_results%}
                     <tr>
+                      <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
                       <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
-                      <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a> .
-                      {{ result.column_name }}
+                      <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a><br>
+                      <strong>{{ result.column_name }}</strong> <span style="background-color:gray" class="badge badge-secondary">{{ result.data_type}}</span>
                       <br>{{ result.column_description }}</td>
                     </tr>
                     {% endfor %}
