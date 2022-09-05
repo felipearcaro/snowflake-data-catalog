@@ -32,7 +32,9 @@
                       <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
                       <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a>
-                      <br>{{ result.table_description }}</td>
+                      {% if result.table_description %}
+                      <br>{{ result.table_description }} </td>
+                      {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -61,7 +63,9 @@
                       <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
                       <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a><br>
                       <strong>{{ result.column_name }}</strong> <span style="background-color:gray" class="badge badge-secondary">{{ result.data_type}}</span>
-                      <br>{{ result.column_description }}</td>
+                      {% if result.column_description %}
+                      <br>{{ result.column_description }} </td>
+                      {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>

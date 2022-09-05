@@ -183,7 +183,8 @@ def search():
         .with_entities(DataCatalogAgg.dbms,
                         DataCatalogAgg.database_name, 
                         DataCatalogAgg.schema_name, 
-                        DataCatalogAgg.table_name)\
+                        DataCatalogAgg.table_name,
+                        DataCatalogAgg.table_description)\
         .filter(or_(DataCatalogAgg.table_description.ilike(query), 
         DataCatalogAgg.column_description.ilike(query),
         DataCatalogAgg.table_name.ilike(query))).distinct()
