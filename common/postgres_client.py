@@ -1,37 +1,34 @@
-from re import split
 import psycopg2
-import requests
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-pg_user = os.getenv('PG_USER')
-pg_host = os.getenv('PG_HOST')
-pg_password = os.getenv('PG_PASSWORD')
-pg_database = os.getenv('PG_DATABASE')
-
-def postgree_client_fetch_all(sql_statement):
-    con = psycopg2.connect(
-                host = pg_host,
-                database=pg_database,
-                user = pg_user,
-                password = pg_password) 
-
-    cursor = con.cursor()
-    cur = con.cursor()
-    cur.execute(sql_statement)
-    rows = cur.fetchall()
-    return rows
+USER = os.getenv('PG_USER')
+HOST = os.getenv('PG_HOST')
+PASSWORD = os.getenv('PG_PASSWORD')
+DATABASE = os.getenv('PG_DATABASE')
 
 
-def postgree_client(sql_statement):
-    con = psycopg2.connect(
-                host = pg_host,
-                database=pg_database,
-                user = pg_user,
-                password = pg_password)
+class PostgresClient:
 
-    cur = con.cursor()
-    cur.execute(sql_statement)
-    con.commit()
+    def _connect(self):
+        con = psycopg2.connect(
+                    host = HOST,
+                    database=DATABASE,
+                    user = USER,
+                    password = PASSWORD) 
+        return con 
+
+    def fetch_all(self, sql_statement):
+        con = self._connect()
+        cur = con.cursor()
+        cur.execute(sql_statement)
+        rows = cur.fetchall()
+        return rows
+
+    def execute(self, sql_statement):
+        con = self._connect()
+        cur = con.cursor()
+        a = cur.execute(sql_statement)
+        b= con.commit()

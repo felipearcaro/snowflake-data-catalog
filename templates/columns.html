@@ -1,119 +1,116 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-
 <section>
   <div style="display: flex;">
-  {% if table_description.dbms == 'snowflake' %}
-  <img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-  {% else %}
-  <img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-  {% endif %}
-  <h5><span style="background-color:gray" class="badge badge-secondary">{{ database }} . {{ schema }} . {{ table }}</span></h5>
-</div>
-  
-    <hr style="width:35%">
+    {% if table_description.dbms == 'snowflake' %}
+    <img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+    {% else %}
+    <img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+    {% endif %}
+    <h5><span style="background-color:gray" class="badge badge-secondary">{{ database }} . {{ schema }} . {{ table
+        }}</span></h5>
+  </div>
 
-    <div class="row">
-      <div class="col-5">
-          {{ table_description.table_description }}</p> 
+  <hr style="width:35%">
 
-        <div class="row">
-          <div class="col-6">
-            <p><strong>Date range*</strong><br>
-              From: 2021-01-01 <br>
-              To: 2022-01-01
-              <p><strong>Tags*</strong><br>
-                <span style="background-color:gray" class="badge badge-secondary">manager</span></h1>
-                <span style="background-color:gray" class="badge badge-secondary">buildium</span></h1>
-                <span style="background-color:gray" class="badge badge-secondary">snowflake</span></h1>
-                <span style="background-color:gray" class="badge badge-secondary">subscriber</span></h1>
-               </p> 
+  <div class="row">
+    <div class="col-5">
+      {{ table_description.table_description }}</p>
+      <div class="row">
+        <div class="col-6">
+          <p><strong>Date range*</strong><br>
+            From: 2021-01-01 <br>
+            To: 2022-01-01
+          <p><strong>Tags*</strong><br>
+            <span style="background-color:gray" class="badge badge-secondary">manager</span></h1>
+            <span style="background-color:gray" class="badge badge-secondary">buildium</span></h1>
+            <span style="background-color:gray" class="badge badge-secondary">snowflake</span></h1>
+            <span style="background-color:gray" class="badge badge-secondary">subscriber</span></h1>
+          </p>
+        </div>
+        <div class="col-6">
+          <p><strong>Last updated*</strong><br>
+            2022-01-01 </p>
+          <p><strong>Data Quality*</strong><br>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-half"></i>
+            <br>Row count <strong>99%</strong></br>
+            Row count overtime <strong>98%</strong></br>
+            Schema comparison <strong>88%</strong>
+          </p>
+        </div>
+
+        <p><strong>Data lineage</strong><br>
+          {% for lineage in table_lineage%}
+
+          <!-- Button trigger modal -->
+        <div style="display: flex;">
+          <p>{{lineage.source_table}}
+            <button type="button" class="btn btn-secondary"
+              style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"
+              data-bs-toggle="modal" data-bs-target="#exampleModal">
+              query
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{ lineage.source_table }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                {{ lineage.source_query }}
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+            </div>
           </div>
-          <div class="col-6">
-            <p><strong>Last updated*</strong><br>
-              2022-01-01 </p> 
-              <p><strong>Data Quality*</strong><br>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i> 
-                <i class="bi bi-star-half"></i> 
-                <br>Row count <strong>99%</strong></br>
-                Row count overtime <strong>98%</strong></br>
-                Schema comparison <strong>88%</strong></p>
-          </div>
+        </div>
 
-          
-
-          <p><strong>Data lineage</strong><br>
-            {% for lineage in table_lineage%}
-                              
+        {% endfor %}
 
 
-                <!-- Button trigger modal -->
-                <div style="display: flex;">
-                  <p>{{lineage.source_table}}
-                  <button type="button" class="btn btn-secondary"
-                 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  query
-</button>
-             </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{ lineage.source_table }}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        {{ lineage.source_query }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
-  </div>
-</div>
+    <div class="col-7">
+      <div class="container">
 
-                {% endfor %}
+        <table class="table table-striped table-responsive table-bordered">
+          <thead class="thead-default">
+            <tr>
+              <th>Column</th>
+              <th>Comment</th>
+              <th>Data type</th>
+              <th>Is nullable</th>
+              <th>Character max lenght</th>
+              <th>Numeric precision</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for column in columns%}
+            <tr>
+              <td>{{ column.column_name }}</td>
+              <td>{{ column.column_description }}</td>
+              <td>{{ column.data_type }}</td>
+              <td>{{ column.is_nullable }}</td>
+              <td>{{ column.character_maximum_length }}</td>
+              <td>{{ column.numeric_precision }}</td>
 
-
-        </div>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
       </div>
-      <div class="col-7">
-        <div class="container">
-                
-          <table class="table table-striped table-responsive table-bordered">
-              <thead class="thead-default">
-                  <tr>
-                      <th>Column</th>
-                      <th>Comment</th>
-                      <th>Data type</th>
-                      <th>Is nullable</th>
-                      <th>Character max lenght</th>
-                      <th>Numeric precision</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for column in columns%}
-                  <tr>
-                      <td>{{ column.column_name }}</td>
-                      <td>{{ column.column_description }}</td>
-                      <td>{{ column.data_type }}</td>
-                      <td>{{ column.is_nullable }}</td>
-                      <td>{{ column.character_maximum_length }}</td>
-                      <td>{{ column.numeric_precision }}</td>
-  
-                  </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-  </div>
- 
+
 
 </section>
 

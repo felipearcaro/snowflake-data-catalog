@@ -1,9 +1,5 @@
-from flask import Flask, render_template, redirect, request, url_for, flash, session
+from flask import Flask, render_template, request
 from common.snowflake_client import *
-from metadata.columns_metadata import ColumnsMetadata
-from metadata.databases_metadata import DatabasesMetadata
-from metadata.schemas_metadata import SchemasMetadata
-from metadata.tables_metadata import TablesMetadata
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
@@ -160,17 +156,11 @@ def columns():
         .with_entities(DataCatalogLineage.source_table, 
                         DataCatalogLineage.source_query)\
         .filter_by(database_name=database, schema_name = schema, table_name = table).distinct()
-    
-    for i in table_lineage:
-        print(f"test {i}")
 
     table_description = DataCatalogAgg.query\
         .with_entities(DataCatalogAgg.table_description,
                        DataCatalogAgg.dbms)\
         .filter_by(database_name=database, schema_name = schema, table_name = table).first()
-
-    for i in table_description:
-        print(f"test {i}")
 
     return render_template('columns.html', columns=columns, table_description = table_description, table_lineage=table_lineage, database=database, schema=schema, table=table)
 

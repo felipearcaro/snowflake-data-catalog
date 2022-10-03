@@ -3,79 +3,95 @@
 
 
 
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Table details</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Column details</button>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-      
-      
-      
-      
-      <section>
-        <div class="container">
-    
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button"
+      role="tab" aria-controls="home-tab-pane" aria-selected="true">Table details</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button"
+      role="tab" aria-controls="profile-tab-pane" aria-selected="false">Column details</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+
+
+
+    <section>
+      <div class="container">
+
         <table class="table table-responsive">
-                <tbody>
-                    {% for result in table_results%}
-                    <tr>
-                      {% if result.dbms == 'snowflake' %}
-                      <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                      {% else %}
-                      <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                      {% endif %}
-                      <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
-                      <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
-                      <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a>
-                      {% if result.table_description %}
-                      <br>{{ result.table_description }} </td>
-                      {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-    </div>
-      </section>
-    
-    
-    </div>
-    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+          <tbody>
+            {% for result in table_results%}
+            <tr>
+              {% if result.dbms == 'snowflake' %}
+              <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30"
+                  class="d-inline-block align-text-top"></td>
+              {% else %}
+              <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30"
+                  class="d-inline-block align-text-top"></td>
+              {% endif %}
+              <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
+                <a
+                  href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{
+                  result.schema_name }}</a> .
+                <a
+                  href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{
+                  result.table_name }}</a>
+                {% if result.table_description %}
+                <br>{{ result.table_description }}
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
 
 
-      <section>
-        <div class="container">
-    
-        <table class="table table-responsive">
-                <tbody>
-                    {% for result in column_results%}
-                    <tr>
-                      {% if result.dbms == 'snowflake' %}
-                      <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                      {% else %}
-                      <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                      {% endif %}
-                      <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
-                      <a href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{ result.schema_name }}</a> .
-                      <a href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{ result.table_name }}</a><br>
-                      <strong>{{ result.column_name }}</strong> <span style="background-color:gray" class="badge badge-secondary">{{ result.data_type}}</span>
-                      {% if result.column_description %}
-                      <br>{{ result.column_description }} </td>
-                      {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-    </div>
-      </section>
-
-
-    </div>
   </div>
+  <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+
+
+    <section>
+      <div class="container">
+
+        <table class="table table-responsive">
+          <tbody>
+            {% for result in column_results%}
+            <tr>
+              {% if result.dbms == 'snowflake' %}
+              <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30"
+                  class="d-inline-block align-text-top"></td>
+              {% else %}
+              <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30"
+                  class="d-inline-block align-text-top"></td>
+              {% endif %}
+              <td><a href="{{url_for('schemas', database=result.database_name)}}">{{ result.database_name }}</a> .
+                <a
+                  href="{{url_for('tables', database=result.database_name, schema=result.schema_name, table=result.table_name)}}">{{
+                  result.schema_name }}</a> .
+                <a
+                  href="{{url_for('columns', database=result.database_name, schema=result.schema_name, table = result.table_name)}}">{{
+                  result.table_name }}</a><br>
+                <strong>{{ result.column_name }}</strong> <span style="background-color:gray"
+                  class="badge badge-secondary">{{ result.data_type}}</span>
+                {% if result.column_description %}
+                <br>{{ result.column_description }}
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+
+  </div>
+</div>
 
 {% endblock %}
-

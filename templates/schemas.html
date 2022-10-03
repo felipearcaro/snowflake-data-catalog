@@ -1,29 +1,32 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-  <section>
-	  <div class="container">
-        <h5> <span style="background-color:gray" class="badge badge-secondary">{{ database }}</span></h5>
-		<table class="table table-responsive">
-            <tbody>
-                {% for schema in schemas%}
-                <tr>
-                  {% if schema.dbms == 'snowflake' %}
-                  <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% else %}
-                  <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% endif %}
-                  <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{ schema.schema_name }}</a>
-                    {% if schema.schema_description %}
-                    <br>{{ schema.schema_description }} </td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-</div>
-  </section>
+<section>
+  <div class="container">
+    <h5> <span style="background-color:gray" class="badge badge-secondary">{{ database }}</span></h5>
+    <table class="table table-responsive">
+      <tbody>
+        {% for schema in schemas%}
+        <tr>
+          {% if schema.dbms == 'snowflake' %}
+          <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% else %}
+          <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% endif %}
+          <td><a href="{{url_for('tables', database=schema.database_name, schema=schema.schema_name)}}">{{
+              schema.schema_name }}</a>
+            {% if schema.schema_description %}
+            <br>{{ schema.schema_description }}
+          </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 
 
-  {% endblock %}
-
+{% endblock %}

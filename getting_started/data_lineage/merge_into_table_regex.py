@@ -1,19 +1,19 @@
 import re
 from common.functions import read_sql_file, read_transformation_file
-from common.snowflake_client import *
-from common.postgres_client import *
+from common.snowflake_client import SnowflakeClient
+from common.postgres_client import PostgresClient
 import os
 
-transformation_files = [x[2] for x in os.walk(f"{os.getcwd()}//transformation_sample//sql")]
+FILE_PATH = f"{os.getcwd()}//getting_started///data_lineage//sql"
+transformation_files = [x[2] for x in os.walk(f"{os.getcwd()}//getting_started//data_lineage//sql")]
 
 for file in transformation_files[0]:
 
-
-    sql_query = read_transformation_file(file)
+    sql_query = read_sql_file(FILE_PATH, file.split(".")[0])
     regexp = r"(merge into|MERGE INTO)"
     if re.search(regexp, sql_query):
 
-        ## Getting table that's being populated
+        # Getting table that's being populated
         regexp = r"(merge into|MERGE INTO)(\s+|\n+)([^\s]+)"
         result = re.search(regexp, sql_query)
 
@@ -23,8 +23,7 @@ for file in transformation_files[0]:
         target_table = target_full_table.split(".")[2]
         print(f"Here's the table that's being populated: {target_full_table.upper()}")
 
-
-        ## Getting table that's being used to populate new table
+        # Getting table that's being used to populate new table
         regexp = r"(using|USING)(\s+|\n+)([^\s]+)"
         result = re.search(regexp, sql_query)
 
@@ -42,7 +41,4 @@ for file in transformation_files[0]:
         '{sql_query}')
         """
 
-        postgree_client(query)
- 
-
-    
+        PostgresClient().execute(query)

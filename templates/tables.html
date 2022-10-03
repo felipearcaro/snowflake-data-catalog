@@ -1,27 +1,30 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-  <section>
-	  <div class="container">
-      <h5> <span style="background-color:gray" class="badge badge-secondary">{{ database }} . {{ schema }}</span></h5>
-		<table class="table table-responsive">
-            <tbody>
-                {% for table in tables%}
-                <tr>
-                  {% if table.dbms == 'snowflake' %}
-                  <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% else %}
-                  <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% endif %}
-                  <td><a href="{{url_for('columns', database=database, schema=schema, table=table.table_name)}}">{{ table.table_name }}</a>
-                    <br>{{ table.table_description }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-</div>
-  </section>
+<section>
+  <div class="container">
+    <h5> <span style="background-color:gray" class="badge badge-secondary">{{ database }} . {{ schema }}</span></h5>
+    <table class="table table-responsive">
+      <tbody>
+        {% for table in tables%}
+        <tr>
+          {% if table.dbms == 'snowflake' %}
+          <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% else %}
+          <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% endif %}
+          <td><a href="{{url_for('columns', database=database, schema=schema, table=table.table_name)}}">{{
+              table.table_name }}</a>
+            <br>{{ table.table_description }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 
 
-  {% endblock %}
-
+{% endblock %}

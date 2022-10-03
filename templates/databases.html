@@ -1,28 +1,30 @@
 {% extends "template.html" %}
 {% block conteudo %}
 
-  <section>
-	  <div class="container">
-		<table class="table table-responsive">
-            <tbody>
-                {% for database in databases%}
-                <tr>
-                  {% if database.dbms == 'snowflake' %}
-                  <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% else %}
-                  <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30" class="d-inline-block align-text-top"></td>
-                  {% endif %}
-                  <strong><td><a href="{{url_for('schemas', database=database.database_name)}}">{{ database.database_name }}</a></strong>
-                    {% if database.database_description %}
-                      <br>{{ database.database_description }} </td>
-                      {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-</div>
-  </section>
-
+<section>
+  <div class="container">
+    <table class="table table-responsive">
+      <tbody>
+        {% for database in databases%}
+        <tr>
+          {% if database.dbms == 'snowflake' %}
+          <td style="width:8%"><img src="/static/images/snowflake.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% else %}
+          <td style="width:8%"><img src="/static/images/mysql.png" alt="" width="30" height="30"
+              class="d-inline-block align-text-top"></td>
+          {% endif %}
+          <strong>
+            <td><a href="{{url_for('schemas', database=database.database_name)}}">{{ database.database_name }}</a>
+          </strong>
+          {% if database.database_description %}
+          <br>{{ database.database_description }} </td>
+          {% endif %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
 
 {% endblock %}
-
