@@ -3,5 +3,6 @@ venv*
 __pycache*
 common.egg*
 build*
-migrati*
+migrations/
 env*
+legacy/
