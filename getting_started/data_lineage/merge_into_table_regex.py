@@ -1,6 +1,5 @@
 import re
-from common.functions import read_sql_file, read_transformation_file
-from common.snowflake_client import SnowflakeClient
+from common.functions import read_sql_file
 from common.postgres_client import PostgresClient
 import os
 
